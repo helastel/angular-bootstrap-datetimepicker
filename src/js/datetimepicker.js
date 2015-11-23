@@ -46,7 +46,7 @@
           return this.utcDateValue + localOffset;
         };
 
-        var validProperties = ['utcDateValue', 'localDateValue', 'display', 'active', 'selectable', 'past', 'future'];
+        var validProperties = ['utcDateValue', 'localDateValue', 'display', 'active', 'current', 'selectable', 'past', 'future'];
 
         for (var prop in arguments[0]) {
           /* istanbul ignore else */
@@ -122,7 +122,7 @@
         '           <td colspan="7" >' +
         '              <span    class="{{ data.currentView }}" ' +
         '                       data-ng-repeat="dateObject in data.dates"  ' +
-        '                       data-ng-class="{active: dateObject.active, past: dateObject.past, future: dateObject.future, disabled: !dateObject.selectable}" ' +
+        '                       data-ng-class="{active: dateObject.active, current: dateObject.current, past: dateObject.past, future: dateObject.future, disabled: !dateObject.selectable}" ' +
         '                       data-ng-click="changeView(data.nextView, dateObject, $event)">{{ dateObject.display }}</span> ' +
         '           </td>' +
         '       </tr>' +
@@ -130,7 +130,7 @@
         '           <td data-ng-repeat="dateObject in week.dates" ' +
         '               data-ng-click="changeView(data.nextView, dateObject, $event)"' +
         '               class="day" ' +
-        '               data-ng-class="{active: dateObject.active, past: dateObject.past, future: dateObject.future, disabled: !dateObject.selectable}" >{{ dateObject.display }}</td>' +
+        '               data-ng-class="{active: dateObject.active, current: dateObject.current, past: dateObject.past, future: dateObject.future, disabled: !dateObject.selectable}" >{{ dateObject.display }}</td>' +
         '       </tr>' +
         '   </tbody>' +
         '</table></div>',
@@ -188,7 +188,8 @@
                   'display': yearMoment.format('YYYY'),
                   'past': yearMoment.year() < startDecade,
                   'future': yearMoment.year() > startDecade + 9,
-                  'active': yearMoment.year() === activeYear
+                  'active': yearMoment.year() === activeYear,
+                  'active': yearMoment.year() === moment().year()
                 };
 
                 result.dates.push(new DateObject(dateValue));
@@ -221,7 +222,8 @@
                 var dateValue = {
                   'utcDateValue': monthMoment.valueOf(),
                   'display': monthMoment.format('MMM'),
-                  'active': monthMoment.format('YYYY-MMM') === activeDate
+                  'active': monthMoment.format('YYYY-MMM') === activeDate,
+                  'active': monthMoment.format('YYYY-MMM') === moment().format('YYYY-MMM')
                 };
 
                 result.dates.push(new DateObject(dateValue));
@@ -268,6 +270,7 @@
                     'utcDateValue': monthMoment.valueOf(),
                     'display': monthMoment.format('D'),
                     'active': monthMoment.format('YYYY-MMM-DD') === activeDate,
+                    'current': monthMoment.format('YYYY-MMM-DD') === moment().format('YYYY-MMM-DD'),
                     'past': monthMoment.isBefore(startOfMonth),
                     'future': monthMoment.isAfter(endOfMonth)
                   };
@@ -303,7 +306,8 @@
                 var dateValue = {
                   'utcDateValue': hourMoment.valueOf(),
                   'display': hourMoment.format('LT'),
-                  'active': hourMoment.format('YYYY-MM-DD H') === activeFormat
+                  'active': hourMoment.format('YYYY-MM-DD H') === activeFormat,
+                  'current': hourMoment.format('YYYY-MM-DD H') === moment().format('YYYY-MM-DD H')
                 };
 
                 result.dates.push(new DateObject(dateValue));
