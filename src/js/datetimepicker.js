@@ -189,7 +189,7 @@
                   'past': yearMoment.year() < startDecade,
                   'future': yearMoment.year() > startDecade + 9,
                   'active': yearMoment.year() === activeYear,
-                  'active': yearMoment.year() === moment().year()
+                  'current': yearMoment.year() === moment().year()
                 };
 
                 result.dates.push(new DateObject(dateValue));
@@ -223,7 +223,7 @@
                   'utcDateValue': monthMoment.valueOf(),
                   'display': monthMoment.format('MMM'),
                   'active': monthMoment.format('YYYY-MMM') === activeDate,
-                  'active': monthMoment.format('YYYY-MMM') === moment().format('YYYY-MMM')
+                  'current': monthMoment.format('YYYY-MMM') === moment().format('YYYY-MMM')
                 };
 
                 result.dates.push(new DateObject(dateValue));
